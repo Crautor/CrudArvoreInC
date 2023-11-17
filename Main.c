@@ -6,7 +6,7 @@
 
 int main() {
     no *raiz = criarArvBin();
-    int opcao, contElite=1,cont18=101,cont19a29=201,cont30a39=301,cont40=401,contador,alt_dir=0,alt_esq=0;
+    int opcao,valor,contElite=1,cont18=101,cont19a29=201,cont30a39=301,cont40=401,contador,alt_dir=0,alt_esq=0;
     do{
         MenuPrincipal(&opcao);
         
@@ -33,6 +33,16 @@ int main() {
                 break;
             case 7:
                 printf("\n %d \n ",altura_ArvBin(raiz)); 
+                break;
+            case 8:
+                printf("informe o numero a ser consultado: ");
+                scanf("%d",&valor);
+                consulta_ArvBin(raiz,valor);
+                break;
+            case 9:
+                printf("informe o numero a ser removido: ");
+                scanf("%d",&valor);
+                remove_ArvBin(raiz,valor);
                 break;
             case 0:
                 printf("Voce decidiu parar!");

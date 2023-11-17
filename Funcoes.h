@@ -205,12 +205,11 @@ int Contar_No_Chamar(ArvBin* raiz, int *Contador){
     else{
         Contar_No(*raiz,Contador);
     }
-
 }
 
 int altura_ArvBin(ArvBin *raiz){
     if (raiz == NULL){
-        return;
+        return 0;
     }
     if (*raiz == NULL){
         return - 1;
@@ -226,6 +225,99 @@ int altura_ArvBin(ArvBin *raiz){
         return alt_dir + 1;
     }
 }
+
+struct No* remove_atual(struct No* atual){
+    no *no1,*no2;
+    if (atual->esq==NULL){
+        no2 = atual->dir;
+        free(atual);
+        return no2;
+    }
+    no1 = atual;
+    no2 = atual->esq;
+    while (no2->dir != NULL){
+        no1 = no2;
+        no2 = no2->dir;
+    }
+    if (no1 != atual){
+        no1->dir = no2->esq;
+        no2->esq = atual->esq;
+    }
+    no2->dir = atual->dir;
+    free(atual);
+    return no2;
+}
+
+int remove_ArvBin(ArvBin *raiz, int valor){
+    if (raiz == NULL){
+        return 0;
+    }
+    struct No* ant = NULL;
+    struct No* atual = *raiz;
+    while (atual != NULL){
+        if (valor == atual->num){
+            if (atual== *raiz){
+                *raiz = remove_atual(atual);
+            }
+            else{
+                if (ant->dir == atual){
+                    ant->dir = remove_atual(atual);
+                }
+                else{
+                    ant->esq = remove_atual(atual);
+                }
+                
+            }
+            return 1;
+        }
+        ant = atual;
+        if (valor> atual->num){
+            atual = atual->dir;
+        }
+        else{
+            atual = atual->esq;
+        }
+    }
+    return 0;
+}
+
+int consulta_ArvBin(ArvBin *raiz, int valor){
+    int esquerda,direita;
+    if (raiz == NULL){
+        return 0;
+    }
+    struct No* atual = *raiz;
+    while (atual!=NULL){
+        if (valor == atual->num){
+            if (atual->esq==NULL){
+                esquerda = -1;
+            }
+            else{
+                esquerda = atual->esq->num;
+            }
+            if (atual->dir==NULL){
+                direita = -1;
+            }
+            else{
+                direita = atual->dir->num;
+            }
+            printf("\n");
+            printf("    %d \n",atual->num);
+            printf("  /    \\ \n");
+            printf("%d      %d    \n",esquerda,direita);
+            printf("\n-1 = NULL\n");
+            return 1;
+        }
+        if (valor>atual->num){
+            atual= atual->dir;
+        }
+        else{
+            atual = atual->esq;
+        }
+    }
+    return 0;
+}
+
 
 void MenuInsercao(int *opcao){
         printf("\n====================================\n");
@@ -251,6 +343,8 @@ void MenuPrincipal(int *opcao){
         printf("5 - Contar Elementos\n");
         printf("6 - Liberar Arvore\n");
         printf("7 - Altura Arvore\n");
+        printf("8 - Consultar Elemento\n");
+        printf("9 - Remover Elemento\n");
         printf("0 - Sair\n");       
         printf("====================================\n");
         printf("Digite a Opcao: ");
