@@ -30,8 +30,7 @@ int main() {
                 break;
             case 5:
                 // contar no
-                Contar_No_Chamar(raiz,&contador);
-                printf("%d\n", contador);
+                printf("%d\n", contarArvore(raiz));
                 break;
             case 6:
                 // liberar
@@ -62,7 +61,7 @@ int main() {
                 break;
 
             case 11:
-                balancearArvore(raiz,&contador);
+                balancearArvore(raiz);
                 break;
             case 0:
                 printf("Voce decidiu parar!");

@@ -188,25 +188,24 @@ int In_Ordem_Chamar(ArvBin* raiz){
     }
 
 }
-
-void Contar_No(no *no_liberar,int *Contador){
-    if(no_liberar == NULL){
-            return;
+int contarNo(no *no_liberar) {
+    if (no_liberar == NULL) {
+        return 0;
+    } else {
+        int cont_esq = contarNo(no_liberar->esq);
+        int cont_dir = contarNo(no_liberar->dir);
+        return 1 + cont_esq + cont_dir;
     }
-    else{
-        Contar_No(no_liberar->esq,Contador);
-        (*Contador)++;
-        Contar_No(no_liberar->dir,Contador);
-    }   
 }
 
-
-int Contar_No_Chamar(ArvBin* raiz, int *Contador){
-    if(raiz==NULL){
+int contarArvore(ArvBin *raiz) {
+    if (raiz == NULL) {
+        printf("Não há dados para contar!");
+        Sleep(2);
         return 0;
-    }
-    else{
-        Contar_No(*raiz,Contador);
+    } else {
+        int contador = contarNo(*raiz);
+        return contador;
     }
 }
 
@@ -401,9 +400,9 @@ void criarArvoreBalanceada(ArvBin *novaRaiz, ArvBin *inicioLista, int inicio, in
 }
 
 
-void balancearArvore(ArvBin *raiz,int *contador) {
+void balancearArvore(ArvBin *raiz) {
 
-    int qtdNos = Contar_No_Chamar(raiz,contador);
+    int qtdNos = contarArvore(raiz);
 
     ArvBin *inicioLista = (ArvBin *) malloc(qtdNos * sizeof(ArvBin));
     if (inicioLista != NULL) {
